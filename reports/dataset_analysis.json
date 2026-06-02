@@ -1,0 +1,412 @@
+[
+  {
+    "name": "Russian Military",
+    "root": "/Users/aliaydin/military-dataset/datasets/russian_military/Russian-military-annotated",
+    "yolo_yaml": {
+      "yaml_path": "/Users/aliaydin/military-dataset/datasets/russian_military/Russian-military-annotated/data.yaml",
+      "nc": 6,
+      "names": [
+        "bmd-2",
+        "bmp-1",
+        "bmp-2",
+        "btr-70",
+        "btr-80",
+        "mt-lb"
+      ]
+    },
+    "splits": {
+      "train": {
+        "images_dir": "/Users/aliaydin/military-dataset/datasets/russian_military/Russian-military-annotated/train/images",
+        "labels_dir": "/Users/aliaydin/military-dataset/datasets/russian_military/Russian-military-annotated/train/labels",
+        "num_images": 595,
+        "num_label_files_present": 595,
+        "num_images_missing_label_file": 0,
+        "num_empty_label_files": 0,
+        "num_boxes": 708,
+        "class_counts": {
+          "4": 130,
+          "5": 125,
+          "1": 121,
+          "2": 115,
+          "0": 114,
+          "3": 103
+        }
+      }
+    },
+    "totals": {
+      "num_images": 595,
+      "num_label_files_present": 595,
+      "num_images_missing_label_file": 0,
+      "num_boxes": 708
+    },
+    "label_health": {
+      "missing_label_files": 0,
+      "empty_label_files": 0,
+      "invalid_boxes": 0,
+      "negative_class_ids": 0,
+      "parse_error_lines": 0
+    },
+    "classes": {
+      "observed_class_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "class_counts": {
+        "4": 130,
+        "5": 125,
+        "1": 121,
+        "2": 115,
+        "0": 114,
+        "3": 103
+      },
+      "num_observed_classes": 6
+    },
+    "bboxes": {
+      "area_percentiles": {
+        "p1": 0.010026481864917499,
+        "p5": 0.043974026610137204,
+        "p10": 0.08535207776714852,
+        "p25": 0.24589550284965603,
+        "p50": 0.4394363319400366,
+        "p75": 0.6152656583190748,
+        "p90": 0.7642406536184212,
+        "p95": 0.8300064699218748,
+        "p99": 0.9520973225979521
+      },
+      "aspect_ratio_percentiles": {
+        "p1": 0.44742724605351414,
+        "p5": 0.692697144368122,
+        "p10": 0.8436290229810895,
+        "p25": 1.0236755986905433,
+        "p50": 1.255841564401544,
+        "p75": 1.542124087640052,
+        "p90": 1.8672689533222209,
+        "p95": 2.086850551546461,
+        "p99": 2.533119466293692
+      },
+      "num_valid_boxes_used_for_stats": 708
+    },
+    "duplicates": {
+      "label_file_duplicate_groups": 0,
+      "label_file_duplicates_total": 0,
+      "image_duplicate_groups": 0,
+      "image_duplicates_total": 0,
+      "largest_label_duplicate_groups_samples": [],
+      "largest_image_duplicate_groups_samples": [],
+      "note": "Image duplicates are only computed when --hash-images is enabled."
+    }
+  },
+  {
+    "name": "Aboba",
+    "root": "/Users/aliaydin/military-dataset/datasets/aboba/aboba",
+    "yolo_yaml": {
+      "yaml_path": "/Users/aliaydin/military-dataset/datasets/aboba/aboba/data.yaml",
+      "nc": 12,
+      "names": [
+        "---",
+        "BMP-BMD",
+        "BTR",
+        "KAMAZ",
+        "MTLB",
+        "REB",
+        "RLS",
+        "RSZO",
+        "SAU",
+        "TANK",
+        "URAL",
+        "ZRK"
+      ]
+    },
+    "splits": {
+      "train": {
+        "images_dir": "/Users/aliaydin/military-dataset/datasets/aboba/aboba/train/images",
+        "labels_dir": "/Users/aliaydin/military-dataset/datasets/aboba/aboba/train/labels",
+        "num_images": 4386,
+        "num_label_files_present": 4386,
+        "num_images_missing_label_file": 0,
+        "num_empty_label_files": 45,
+        "num_boxes": 5424,
+        "class_counts": {
+          "9": 2934,
+          "1": 1305,
+          "2": 363,
+          "4": 288,
+          "8": 180,
+          "11": 108,
+          "7": 99,
+          "10": 63,
+          "3": 45,
+          "5": 18,
+          "6": 12,
+          "0": 9
+        }
+      }
+    },
+    "totals": {
+      "num_images": 4386,
+      "num_label_files_present": 4386,
+      "num_images_missing_label_file": 0,
+      "num_boxes": 5424
+    },
+    "label_health": {
+      "missing_label_files": 0,
+      "empty_label_files": 45,
+      "invalid_boxes": 0,
+      "negative_class_ids": 0,
+      "parse_error_lines": 0
+    },
+    "classes": {
+      "observed_class_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "class_counts": {
+        "9": 2934,
+        "1": 1305,
+        "2": 363,
+        "4": 288,
+        "8": 180,
+        "11": 108,
+        "7": 99,
+        "10": 63,
+        "3": 45,
+        "5": 18,
+        "6": 12,
+        "0": 9
+      },
+      "num_observed_classes": 12
+    },
+    "bboxes": {
+      "area_percentiles": {
+        "p1": 0.00034968261718750003,
+        "p5": 0.00078857421875,
+        "p10": 0.0014467773437500005,
+        "p25": 0.0032373046875,
+        "p50": 0.008364257812500001,
+        "p75": 0.02493896484375,
+        "p90": 0.06453808593749999,
+        "p95": 0.1085108642578124,
+        "p99": 0.2792227539062494
+      },
+      "aspect_ratio_percentiles": {
+        "p1": 0.49214646464646467,
+        "p5": 0.6697550877893057,
+        "p10": 0.7727272727272727,
+        "p25": 1.0123080397470643,
+        "p50": 1.3287354134956875,
+        "p75": 1.7222222222222223,
+        "p90": 2.1078185328185324,
+        "p95": 2.411764705882353,
+        "p99": 3.0709134450906497
+      },
+      "num_valid_boxes_used_for_stats": 5424
+    },
+    "duplicates": {
+      "label_file_duplicate_groups": 85,
+      "label_file_duplicates_total": 215,
+      "image_duplicate_groups": 0,
+      "image_duplicates_total": 0,
+      "largest_label_duplicate_groups_samples": [
+        [
+          "train/labels/100_png.rf.69db2c108a78cee1f7d92449609615ee.txt",
+          "train/labels/183_png.rf.03c6ae19c488a568974d0c0df7d454e8.txt",
+          "train/labels/175_png.rf.4df8f4a23f076a715b4f43aee7abb7b6.txt",
+          "train/labels/175_png.rf.4d0b8d450e1cd28d57a0e3de842cc159.txt",
+          "train/labels/176_png.rf.69bdc3ca1f07bb8ecbee881ec54acc83.txt",
+          "train/labels/182_png.rf.bcfb34a7b7d917e9d6ebbff0361518bb.txt",
+          "train/labels/90_png.rf.fe33c46e734f20ea3e9b0925307b0e90.txt",
+          "train/labels/174_png.rf.d8c3f138012ceec21e80542f648f74dc.txt",
+          "train/labels/90_png.rf.c566a86a20c37f3f11cb4bbdc7e772f7.txt",
+          "train/labels/182_png.rf.369f82334b17db40e72a1907149ca4fe.txt",
+          "train/labels/27_png.rf.066fb69290686ad219c94dc57d950ef8.txt",
+          "train/labels/182_png.rf.381acdcd84388b9b1bc592e883c4ea76.txt",
+          "train/labels/184_png.rf.0ab84fb73037f8a1a4f11e0813615aa8.txt",
+          "train/labels/2_png.rf.817ca141c18f8fe6a0c9e859899fe619.txt",
+          "train/labels/2_png.rf.8361552ccdda0906c412a0d874b68457.txt",
+          "train/labels/100_png.rf.da1791d2c63406a24a2bebb8e0b60dcc.txt",
+          "train/labels/92_png.rf.3af39e6320e3c8ba8972ba0731cbd1a7.txt",
+          "train/labels/27_png.rf.e538af7cec271178afada7c323026f75.txt",
+          "train/labels/92_png.rf.c8b8a920448f0d5543190dc9d78e357c.txt",
+          "train/labels/183_png.rf.65d1a624f5046e6559b837478ce5c01d.txt",
+          "train/labels/182_png.rf.0bb811e8ffc6abefacffbd3dd2e4feec.txt",
+          "train/labels/184_png.rf.88fdfc28a307d7efca0e018d2448b0a2.txt",
+          "train/labels/176_png.rf.ca95a9feb2a82ac2b5dfdc199bbd2f07.txt",
+          "train/labels/183_png.rf.5fce5a3852554c366af7144883eec1b7.txt",
+          "train/labels/100_png.rf.151925b2daf2399d09d8ffb41c3f3572.txt",
+          "train/labels/174_png.rf.952eda3ab521ca2eec149f8b3414d261.txt",
+          "train/labels/182_png.rf.c339a7290772aa61bfebcd1236822da1.txt",
+          "train/labels/174_png.rf.8f12a07342e9159342aca807e553f3b5.txt",
+          "train/labels/90_png.rf.bc2ff70869d91db10a75bcb6d36a585f.txt",
+          "train/labels/27_png.rf.f812684294cac4d1054afec313f0ac8f.txt",
+          "train/labels/2_png.rf.dcbd5b8f659ef93df9546d5ae1976963.txt",
+          "train/labels/175_png.rf.ec61e1874bb77324e06e88b816872d46.txt",
+          "train/labels/183_png.rf.2d92bc76ec76ad4f1022560aa79fcc28.txt",
+          "train/labels/184_png.rf.8865af02ad9ef68a151d471612f65b77.txt",
+          "train/labels/1_png.rf.20705c20dec7af96602bfd3f71e78bc3.txt",
+          "train/labels/176_png.rf.0486c793683ace2b7d3fbcf3c07800af.txt",
+          "train/labels/174_png.rf.268a299c4e8ea43b522076669e09b407.txt",
+          "train/labels/92_png.rf.af10d8933bbe6a8f29ac57814e8b436d.txt",
+          "train/labels/182_png.rf.16c7c63c24e03969f4fb22644d0b7cf7.txt",
+          "train/labels/174_png.rf.5247c17dc99d39e11824ba36c24f5374.txt",
+          "train/labels/1_png.rf.140e5413c7936421cfb9fe7c0f5507d2.txt",
+          "train/labels/1_png.rf.1d4e4b60eda40c2a950398d32e7ea2b6.txt",
+          "train/labels/183_png.rf.aae8d0285d67eab971243e279d0cafb3.txt",
+          "train/labels/174_png.rf.9e4db063feefec23c2e8ad8a0de43dfe.txt",
+          "train/labels/183_png.rf.3f0cc7e64ca94f6d46fe0e181bab61c2.txt"
+        ],
+        [
+          "train/labels/bandicam-2023-10-16-17-52-19-570_jpg.rf.45e7ad495f8cb64087282df955759419.txt",
+          "train/labels/bandicam-2023-10-16-17-52-19-570_jpg.rf.ac28168252cfe6bd533f039e9b802f0d.txt",
+          "train/labels/bandicam-2023-10-16-17-52-19-570_jpg.rf.6430bea09beedfa3115e7a30fc3bb132.txt"
+        ],
+        [
+          "train/labels/44_png.rf.a3d5d11c8bd32b773a45fcba3d9e56b3.txt",
+          "train/labels/44_png.rf.62c17c00ee4ee42662ff61c8a547044e.txt",
+          "train/labels/44_png.rf.61e352c73138c1b38b5feae8ba1e74b7.txt"
+        ],
+        [
+          "train/labels/137_png.rf.fd77b241170c9a219b0d0aa3002249f8.txt",
+          "train/labels/137_png.rf.273529125360d758144c219bea205275.txt"
+        ],
+        [
+          "train/labels/IMG_20231018_192700_471_0036-0_png.rf.1e5a1a12e9a0fedbb1f476a8b1bf25f1.txt",
+          "train/labels/IMG_20231018_192700_471_0036-0_png.rf.6403bfc96e663c66376875a417fc6e2f.txt"
+        ]
+      ],
+      "largest_image_duplicate_groups_samples": [],
+      "note": "Image duplicates are only computed when --hash-images is enabled."
+    }
+  },
+  {
+    "name": "VisDrone",
+    "root": "/Users/aliaydin/military-dataset/datasets/visdrone/VisDrone_Veri",
+    "yolo_yaml": {
+      "yaml_path": "/Users/aliaydin/military-dataset/datasets/visdrone/VisDrone_Veri/visdrone.yaml",
+      "nc": 6,
+      "names": [
+        "pedestrian",
+        "people",
+        "car",
+        "van",
+        "truck",
+        "bus"
+      ]
+    },
+    "splits": {
+      "valid": {
+        "images_dir": "/Users/aliaydin/military-dataset/datasets/visdrone/VisDrone_Veri/VisDrone2019-DET-val/images",
+        "labels_dir": "/Users/aliaydin/military-dataset/datasets/visdrone/VisDrone_Veri/VisDrone2019-DET-val/labels",
+        "num_images": 548,
+        "num_label_files_present": 548,
+        "num_images_missing_label_file": 0,
+        "num_empty_label_files": 0,
+        "num_boxes": 31009,
+        "class_counts": {
+          "2": 14064,
+          "0": 8844,
+          "1": 5125,
+          "3": 1975,
+          "4": 750,
+          "5": 251
+        }
+      },
+      "train": {
+        "images_dir": "/Users/aliaydin/military-dataset/datasets/visdrone/VisDrone_Veri/VisDrone2019-DET-train/images",
+        "labels_dir": "/Users/aliaydin/military-dataset/datasets/visdrone/VisDrone_Veri/VisDrone2019-DET-train/labels",
+        "num_images": 6471,
+        "num_label_files_present": 6471,
+        "num_images_missing_label_file": 0,
+        "num_empty_label_files": 0,
+        "num_boxes": 295020,
+        "class_counts": {
+          "2": 144866,
+          "0": 79337,
+          "1": 27059,
+          "3": 24956,
+          "4": 12875,
+          "5": 5926
+        }
+      }
+    },
+    "totals": {
+      "num_images": 7019,
+      "num_label_files_present": 7019,
+      "num_images_missing_label_file": 0,
+      "num_boxes": 326029
+    },
+    "label_health": {
+      "missing_label_files": 0,
+      "empty_label_files": 0,
+      "invalid_boxes": 1,
+      "negative_class_ids": 0,
+      "parse_error_lines": 0
+    },
+    "classes": {
+      "observed_class_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "class_counts": {
+        "2": 158930,
+        "0": 88181,
+        "1": 32184,
+        "3": 26931,
+        "4": 13625,
+        "5": 6177
+      },
+      "num_observed_classes": 6
+    },
+    "bboxes": {
+      "area_percentiles": {
+        "p1": 1.83325e-05,
+        "p5": 4.3511471999999995e-05,
+        "p10": 7.0745034e-05,
+        "p25": 0.000174034155,
+        "p50": 0.000486126389,
+        "p75": 0.001468486512,
+        "p90": 0.0039734234159999994,
+        "p95": 0.006916680017649973,
+        "p99": 0.017922435504659905
+      },
+      "aspect_ratio_percentiles": {
+        "p1": 0.16544415444154442,
+        "p5": 0.21108101452844127,
+        "p10": 0.24997812582028175,
+        "p25": 0.35155532222076386,
+        "p50": 0.5750236253543803,
+        "p75": 0.9549374329338,
+        "p90": 1.4166715277372688,
+        "p95": 1.6499790004199917,
+        "p99": 2.0833333333333335
+      },
+      "num_valid_boxes_used_for_stats": 326028
+    },
+    "duplicates": {
+      "label_file_duplicate_groups": 0,
+      "label_file_duplicates_total": 0,
+      "image_duplicate_groups": 0,
+      "image_duplicates_total": 0,
+      "largest_label_duplicate_groups_samples": [],
+      "largest_image_duplicate_groups_samples": [],
+      "note": "Image duplicates are only computed when --hash-images is enabled."
+    }
+  }
+]

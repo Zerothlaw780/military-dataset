@@ -1,0 +1,13 @@
+dataset,class_id,class_name,split,instances
+Russian Military,0,bmd-2,train,114
+Russian Military,0,bmd-2,TOTAL,114
+Russian Military,1,bmp-1,train,121
+Russian Military,1,bmp-1,TOTAL,121
+Russian Military,2,bmp-2,train,115
+Russian Military,2,bmp-2,TOTAL,115
+Russian Military,3,btr-70,train,103
+Russian Military,3,btr-70,TOTAL,103
+Russian Military,4,btr-80,train,130
+Russian Military,4,btr-80,TOTAL,130
+Russian Military,5,mt-lb,train,125
+Russian Military,5,mt-lb,TOTAL,125
