@@ -1,0 +1,56 @@
+# -----------------------------------------------------------------------------
+# YOLO / Computer Vision project (.gitignore)
+# Keeps code/config/docs tracked; ignores datasets, artifacts, and binaries.
+# -----------------------------------------------------------------------------
+
+# --- Data / outputs (project-specific) ---
+datasets/
+merged_dataset/
+runs/
+
+# --- Model artifacts / exports ---
+*.pt
+*.onnx
+*.engine
+
+# --- Images (requested) ---
+*.jpg
+*.jpeg
+*.png
+
+# --- Python caches ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# --- Notebooks ---
+.ipynb_checkpoints/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Packaging / build artifacts ---
+build/
+dist/
+*.egg-info/
+
+# --- Logs ---
+*.log
+
+# --- Secrets / local env ---
+.env
+.env.*
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
