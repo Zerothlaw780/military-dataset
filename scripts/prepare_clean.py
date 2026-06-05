@@ -89,42 +89,58 @@ def dedupe_records(records: list[SampleRecord], stats: CleanStats, *, max_hammin
 def select_visdrone_subset(
     records: list[SampleRecord],
     *,
-    target_min: int = 6000,
-    target_max: int = 8000,
+    target_images: int = 1000,
+    instance_min: int = 10000,
+    instance_max: int = 12000,
 ) -> list[SampleRecord]:
+    """Select ~target_images distinct scenes whose total civilian instances land in
+    [instance_min, instance_max], while maximizing scene diversity.
+
+    Records are assumed already pHash-deduplicated (one image per cluster). We bias
+    toward lower-density images so that ~target_images images fit inside the instance
+    band, then swap in higher-density scenes to raise the total into the band. This
+    keeps a wide spread of scene densities (diverse scenes) rather than only the
+    densest frames.
+    """
     if not records:
         return []
 
-    def score(r: SampleRecord) -> float:
-        types = bin(r.vehicle_type_mask).count("1")
-        n = len(r.boxes)
-        return types * 100.0 - abs(n - 15) * 0.3
+    def density(r: SampleRecord) -> int:
+        return len(r.boxes)
 
-    ordered = sorted(records, key=score, reverse=True)
-    selected: list[SampleRecord] = []
-    total = 0
+    # Ascending density; tie-break prefers more distinct vehicle types (diversity).
+    by_density = sorted(records, key=lambda r: (density(r), -bin(r.vehicle_type_mask).count("1")))
+    n = len(by_density)
+    if n <= target_images:
+        return by_density
 
-    for r in ordered:
-        n = len(r.boxes)
-        if total >= target_min and total + n > target_max:
-            continue
-        if total + n > target_max and total >= target_min:
+    selected = by_density[:target_images]
+    rest = by_density[target_images:]  # ascending, densities >= selected
+    total = sum(density(r) for r in selected)
+
+    # Case A: lowest target_images already overshoot the band -> drop densest picks.
+    while total > instance_max and len(selected) > 1:
+        densest_idx = max(range(len(selected)), key=lambda k: density(selected[k]))
+        total -= density(selected[densest_idx])
+        selected.pop(densest_idx)
+
+    # Case B: below the band -> swap lowest-density picks for higher-density scenes.
+    i = 0
+    j = len(rest) - 1
+    while total < instance_min and i < len(selected) and j >= 0:
+        out_d = density(selected[i])
+        in_d = density(rest[j])
+        if in_d <= out_d:
             break
-        selected.append(r)
-        total += n
-        if total >= target_max:
-            break
+        new_total = total - out_d + in_d
+        if new_total <= instance_max:
+            selected[i] = rest[j]
+            total = new_total
+            i += 1
+            j -= 1
+        else:
+            j -= 1  # this swap overshoots; try a smaller in-density scene
 
-    if total < target_min:
-        rest = sorted([r for r in ordered if r not in selected], key=lambda x: len(x.boxes))
-        for r in rest:
-            n = len(r.boxes)
-            if total + n > target_max:
-                continue
-            selected.append(r)
-            total += n
-            if total >= target_min:
-                break
     return selected
 
 
@@ -171,8 +187,9 @@ def clean_source(
     prefix: str,
     *,
     keep_all: bool = True,
-    civilian_target_min: int = 6000,
-    civilian_target_max: int = 8000,
+    civilian_target_images: int = 1000,
+    civilian_instance_min: int = 10000,
+    civilian_instance_max: int = 12000,
     max_hamming: int = 8,
 ) -> tuple[CleanStats, Counter]:
     records, stats = build_records(root, remap, drop)
@@ -182,8 +199,9 @@ def clean_source(
         before = len(records)
         records = select_visdrone_subset(
             records,
-            target_min=civilian_target_min,
-            target_max=civilian_target_max,
+            target_images=civilian_target_images,
+            instance_min=civilian_instance_min,
+            instance_max=civilian_instance_max,
         )
         stats.subset_removed = before - len(records)
 

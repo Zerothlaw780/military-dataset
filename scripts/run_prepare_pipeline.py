@@ -30,6 +30,13 @@ def main() -> int:
     ap.add_argument("--phash-threshold", type=int, default=8)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--skip-visdrone", action="store_true", help="Skip VisDrone (debug only)")
+    ap.add_argument(
+        "--only",
+        action="append",
+        default=None,
+        help="Only re-clean these source(s); reuse existing staging for the rest. "
+        "Repeatable, e.g. --only visdrone",
+    )
     args = ap.parse_args()
 
     repo = args.repo_root.resolve()
@@ -38,9 +45,13 @@ def main() -> int:
     reports = repo / "reports"
 
     all_stats: dict = {}
+    only = set(args.only) if args.only else None
 
     for name, cfg in DATASET_SOURCES.items():
         if name == "visdrone" and args.skip_visdrone:
+            continue
+        if only is not None and name not in only:
+            print(f"\n=== Skipping {name} (reusing existing staging) ===")
             continue
         root = (repo / cfg["root"]).resolve()
         if not root.is_dir():
@@ -58,8 +69,9 @@ def main() -> int:
             max_hamming=args.phash_threshold,
         )
         if not cfg.get("keep_all", True):
-            kw["civilian_target_min"] = cfg.get("civilian_target_min", 6000)
-            kw["civilian_target_max"] = cfg.get("civilian_target_max", 8000)
+            kw["civilian_target_images"] = cfg.get("civilian_target_images", 1000)
+            kw["civilian_instance_min"] = cfg.get("civilian_instance_min", 10000)
+            kw["civilian_instance_max"] = cfg.get("civilian_instance_max", 12000)
 
         stats, inst = clean_source(**kw)
         all_stats[name] = {
@@ -100,7 +112,7 @@ def main() -> int:
         reports / "final_statistics.md",
         pipeline_meta={
             "split": "70/20/10 stratified by dominant class",
-            "visdrone_civilian_target": "6000-8000 instances",
+            "visdrone_civilian_target": "~1000 images, 10000-12000 instances",
             "merged_instances": dict(inst_merged),
         },
     )

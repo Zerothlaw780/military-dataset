@@ -50,8 +50,9 @@ DATASET_SOURCES = {
         "drop": VISDRONE_DROP,
         "keep_all": False,
         "prefix": "vd",
-        "civilian_target_min": 6000,
-        "civilian_target_max": 8000,
+        "civilian_target_images": 1000,
+        "civilian_instance_min": 10000,
+        "civilian_instance_max": 12000,
     },
 }
 
