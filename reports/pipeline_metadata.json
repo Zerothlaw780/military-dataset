@@ -4,47 +4,22 @@
   "seed": 42,
   "phash_threshold": 8,
   "per_source": {
-    "russian_military": {
-      "pairs_seen": 595,
-      "empty_labels_removed": 0,
-      "no_boxes_after_remap": 54,
-      "invalid_boxes_dropped": 70,
-      "duplicates_removed": 6,
-      "subset_removed": 0,
-      "kept_images": 535,
-      "instances": {
-        "1": 632
-      }
-    },
-    "aboba": {
-      "pairs_seen": 4386,
-      "empty_labels_removed": 45,
-      "no_boxes_after_remap": 441,
-      "invalid_boxes_dropped": 0,
-      "duplicates_removed": 911,
-      "subset_removed": 0,
-      "kept_images": 2989,
-      "instances": {
-        "1": 1566,
-        "0": 2225
-      }
-    },
     "visdrone": {
       "pairs_seen": 7019,
       "empty_labels_removed": 0,
       "no_boxes_after_remap": 308,
       "invalid_boxes_dropped": 1,
       "duplicates_removed": 37,
-      "subset_removed": 6278,
-      "kept_images": 396,
+      "subset_removed": 5674,
+      "kept_images": 1000,
       "instances": {
-        "2": 8000
+        "2": 10139
       }
     }
   },
   "merged_instances": {
     "1": 2198,
     "0": 2225,
-    "2": 8000
+    "2": 10139
   }
 }

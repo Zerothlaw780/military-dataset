@@ -1,0 +1,13 @@
+split,class_id,class_name,instances,images_with_class
+train,0,tank,1570,1328
+train,1,armored_vehicle,1530,1259
+train,2,civilian_vehicle,6977,700
+val,0,tank,445,380
+val,1,armored_vehicle,459,363
+val,2,civilian_vehicle,1978,200
+test,0,tank,210,188
+test,1,armored_vehicle,209,180
+test,2,civilian_vehicle,1184,100
+TOTAL,0,tank,2225,
+TOTAL,1,armored_vehicle,2198,
+TOTAL,2,civilian_vehicle,10139,
