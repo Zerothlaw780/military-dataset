@@ -23,7 +23,7 @@ detect and classify ground vehicles in aerial/drone footage into three classes:
 |----|-------------------|----------------------------------------------------------|
 | 0  | `tank`            | Main battle tanks (e.g. T-72, T-90).                     |
 | 1  | `armored_vehicle` | Armored fighting vehicles (BMP, BTR, MT-LB, APC, IFV).  |
-| 2  | `civilian_vehicle`| Civilian road vehicles (cars, vans, trucks, buses).      |
+| 2  | `civilian_vehicle`| Non-military civilian road vehicles.                     |
 
 The project goes well beyond model training: it covers **custom dataset
 construction** from three heterogeneous public sources, rigorous **data
@@ -85,7 +85,7 @@ YOLO-format dataset through a fully scripted pipeline:
 
 - **Russian Military** → all armored classes mapped to `armored_vehicle`.
 - **Aboba** → `BMP/BMD`, `BTR`, `MT-LB` → `armored_vehicle`; `TANK` → `tank`.
-- **VisDrone** → `car`, `van`, `truck`, `bus` → `civilian_vehicle`; `pedestrian` / `people` removed.
+- **VisDrone** → all civilian road-vehicle labels → `civilian_vehicle`; non-vehicle labels (e.g. pedestrians) removed.
 
 ---
 
@@ -150,13 +150,15 @@ tighter bounding boxes across IoU thresholds. The gain from `s` → `m` is small
 (+0.004 mAP@50–95) but consistent, and `m` remains lightweight enough for
 practical UAV/edge deployment, making it the best accuracy-vs-cost trade-off.
 
-| Artifact          | Location                          |
-|-------------------|-----------------------------------|
-| Confusion matrix  | `docs/confusion_matrix.png`       |
-| Results curves    | `docs/results.png`                |
-| Final report      | `reports/final_report.pdf`        |
-| Statistics report | `reports/final_statistics.md`     |
-| Leakage report    | `reports/leakage_report.md`       |
+| Artifact          | Location                              |
+|-------------------|---------------------------------------|
+| Confusion matrix  | `docs/confusion_matrix.png`           |
+| Results curves    | `docs/results.png`                    |
+| Final report      | `reports/final_report.pdf`            |
+| Statistics report | `reports/final_statistics.md`         |
+| Leakage report    | `reports/leakage_report.md`           |
+
+**Confusion matrix (final YOLO11m model, test split):**
 
 ![Confusion matrix](docs/confusion_matrix.png)
 
@@ -164,13 +166,20 @@ practical UAV/edge deployment, making it the best accuracy-vs-cost trade-off.
 
 ## Example Detections
 
-Real-world UAV footage validation (drone clips of vehicle convoys):
+Qualitative results from the final YOLO11m model, one per class:
 
-| | |
-|---|---|
-| ![Sample detection 1](docs/sample_detection_1.jpg) | ![Sample detection 2](docs/sample_detection_2.jpg) |
+| `tank` | `armored_vehicle` | `civilian_vehicle` |
+|:------:|:-----------------:|:------------------:|
+| ![Tank detection](docs/tank_detection.png) | ![Armored vehicle detection](docs/armored_vehicle_detection.png) | ![Civilian vehicle detection](docs/civilian_vehicle_detection.png) |
 
-> Additional qualitative examples live in [`examples/`](examples/).
+---
+
+## Project Report
+
+The full written project report (methodology, experiments, and analysis) is
+available as a PDF:
+
+**[reports/final_report.pdf](reports/final_report.pdf)**
 
 ---
 
@@ -199,22 +208,21 @@ military-dataset/
 │   ├── merge_hardcases.py
 │   └── ...
 │
-├── docs/                      # figures and visual documentation
-│   ├── README.md
+├── docs/                      # figures used in this README
 │   ├── confusion_matrix.png
+│   ├── confusion_matrix_normalized.png
 │   ├── results.png
-│   ├── sample_detection_1.jpg
-│   └── sample_detection_2.jpg
+│   ├── tank_detection.png
+│   ├── armored_vehicle_detection.png
+│   └── civilian_vehicle_detection.png
 │
-├── reports/                   # generated analyses, metrics, and figures
-│   ├── README.md
-│   ├── final_statistics.md
-│   ├── leakage_report.md
-│   ├── class_distribution.md
-│   └── final_report.pdf
-│
-└── examples/                  # qualitative example detections
-    └── README.md
+└── reports/                   # generated analyses, metrics, and the report
+    ├── README.md
+    ├── final_report.pdf
+    ├── final_statistics.md
+    ├── leakage_report.md
+    ├── class_distribution.md
+    └── merged_class_distribution.md
 ```
 
 > Raw datasets, merged data, training runs, and model binaries are intentionally
