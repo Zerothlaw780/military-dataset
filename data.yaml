@@ -1,0 +1,13 @@
+# YOLO dataset configuration — UAV vehicle detection (3 classes)
+# The prepared dataset is produced by scripts/run_prepare_pipeline.py into
+# merged_dataset/. Train with: yolo detect train data=data.yaml model=yolo11m.pt
+path: merged_dataset
+train: train/images
+val: val/images
+test: test/images
+
+nc: 3
+names:
+  0: tank
+  1: armored_vehicle
+  2: civilian_vehicle

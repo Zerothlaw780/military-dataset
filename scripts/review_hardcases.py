@@ -6,6 +6,7 @@ then records your decision. Designed to follow ``mine_hardcases.py`` /
 ``deduplicate.py``.
 
 Keyboard controls:
+    T  -> label as tank             (crop is MOVED into hardcase_tank/)
     A  -> label as armored_vehicle  (crop is MOVED into hardcase_armored/)
     C  -> label as civilian_vehicle (kept in place)
     D  -> delete / ignore           (crop moved into hardcase_deleted/)
@@ -31,6 +32,7 @@ from pathlib import Path
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 REVIEW_FIELDS = ["crop_file", "decision", "confidence", "timestamp"]
 
+DECISION_TANK = "tank"
 DECISION_ARMORED = "armored_vehicle"
 DECISION_CIVILIAN = "civilian_vehicle"
 DECISION_DELETE = "delete"
@@ -150,6 +152,7 @@ def main() -> int:
     ap.add_argument("--crops", type=Path, default=Path("hardcase_mining/crops"), help="Folder of crop images.")
     ap.add_argument("--metadata", type=Path, default=None, help="Optional metadata CSV for confidences.")
     ap.add_argument("--review-csv", type=Path, default=None, help="Decisions file (default: <crops>/../review.csv).")
+    ap.add_argument("--tank-dir", type=Path, default=None, help="Destination for tank picks (default: <crops>/../hardcase_tank).")
     ap.add_argument("--armored-dir", type=Path, default=None, help="Destination for armored picks (default: <crops>/../hardcase_armored).")
     ap.add_argument("--deleted-dir", type=Path, default=None, help="Destination for deleted/ignored (default: <crops>/../hardcase_deleted).")
     ap.add_argument("--max-width", type=int, default=1000, help="Max display width.")
@@ -168,6 +171,7 @@ def main() -> int:
 
     base = args.crops.parent
     review_csv = args.review_csv or (base / "review.csv")
+    tank_dir = args.tank_dir or (base / "hardcase_tank")
     armored_dir = args.armored_dir or (base / "hardcase_armored")
     deleted_dir = args.deleted_dir or (base / "hardcase_deleted")
 
@@ -190,7 +194,7 @@ def main() -> int:
         return 0
 
     print(f"Reviewing {len(pending)} crop(s) | {len(reviewed)} already done | total {total_known}")
-    print("Controls: [A]rmored  [C]ivilian  [D]elete/ignore  [U]ndo  [Q/ESC]uit")
+    print("Controls: [T]ank  [A]rmored  [C]ivilian  [D]elete/ignore  [U]ndo  [Q/ESC]uit")
 
     window = "Hard-case review"
     cv2.namedWindow(window, cv2.WINDOW_AUTOSIZE)
@@ -221,7 +225,7 @@ def main() -> int:
         header = [
             f"[{done + 1}/{total_known}]  remaining: {len(pending) - idx}",
             f"file: {crop_path.name}",
-            f"confidence: {conf_str}   keys: A=armored  C=civilian  D=delete  U=undo  Q=quit",
+            f"confidence: {conf_str}   keys: T=tank  A=armored  C=civilian  D=delete  U=undo  Q=quit",
         ]
         canvas = render(cv2, img, header_lines=header, max_w=args.max_width, max_h=args.max_height)
         cv2.imshow(window, canvas)
@@ -252,7 +256,13 @@ def main() -> int:
             print(f"  undid: {final_path.name}")
             continue
 
-        if key in (ord("a"), ord("A")):
+        if key in (ord("t"), ord("T")):
+            decision = DECISION_TANK
+            tank_dir.mkdir(parents=True, exist_ok=True)
+            dest = tank_dir / crop_path.name
+            shutil.move(str(crop_path), str(dest))
+            moved_to = dest
+        elif key in (ord("a"), ord("A")):
             decision = DECISION_ARMORED
             armored_dir.mkdir(parents=True, exist_ok=True)
             dest = armored_dir / crop_path.name
@@ -282,9 +292,10 @@ def main() -> int:
     for d in reviewed.values():
         counts[d] = counts.get(d, 0) + 1
     print("\nSummary:")
-    for d in (DECISION_ARMORED, DECISION_CIVILIAN, DECISION_DELETE):
+    for d in (DECISION_TANK, DECISION_ARMORED, DECISION_CIVILIAN, DECISION_DELETE):
         print(f"  {d}: {counts.get(d, 0)}")
     print(f"Decisions saved to {review_csv}")
+    print(f"Tank crops -> {tank_dir}")
     print(f"Armored crops -> {armored_dir}")
     return 0
 

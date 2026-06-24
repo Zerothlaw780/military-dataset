@@ -1,8 +1,12 @@
-Pillow>=10.0.0
-imagehash>=4.3.0
-PyYAML>=6.0
+# UAV Vehicle Detection — Python dependencies
+# Install with: python -m pip install -r requirements.txt
 
-# Hard-case mining pipeline
-ultralytics>=8.3.0
-opencv-python>=4.8.0
+# --- Core: training, inference, export ---
+ultralytics>=8.3.0          # YOLO11 training/validation/export (pulls torch)
+opencv-python>=4.8.0        # video I/O, drawing, hard-case mining
 numpy>=1.24.0
+
+# --- Dataset pipeline & deduplication ---
+Pillow>=10.0.0              # image loading for hashing/grids
+imagehash>=4.3.0            # perceptual-hash near-duplicate removal
+PyYAML>=6.0                 # data.yaml / config parsing

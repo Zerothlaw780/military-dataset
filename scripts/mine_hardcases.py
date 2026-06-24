@@ -160,11 +160,11 @@ def process_video(
     hash_size: int,
     hash_resize: int,
     model_name: str,
-) -> tuple[int, int, int, Counter]:
+) -> tuple[int, int, int, int, Counter]:
     cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
         print(f"  WARNING: could not open {video_path.name}, skipping")
-        return 0, 0, 0, Counter()
+        return 0, 0, 0, 0, Counter()
 
     fps = cap.get(cv2.CAP_PROP_FPS) or 0.0
     if fps <= 1e-6:
@@ -177,6 +177,7 @@ def process_video(
 
     saved = 0
     skipped_temporal = 0
+    skipped_small = 0  # accepted by the mode rule but bbox too small to be useful
     considered = 0  # detections accepted by the mode rule + size (candidates for saving)
     saved_by_class: Counter = Counter()
     frame_index = -1
@@ -221,7 +222,9 @@ def process_video(
             y1 = max(0, min(int(round(y1f)), frame_h - 1))
             x2 = max(0, min(int(round(x2f)), frame_w))
             y2 = max(0, min(int(round(y2f)), frame_h))
+            # Reject tiny boxes: too small to review or to be useful for retraining.
             if (x2 - x1) < min_crop_px or (y2 - y1) < min_crop_px:
+                skipped_small += 1
                 continue
 
             crop = frame[y1:y2, x1:x2]
@@ -280,7 +283,7 @@ def process_video(
             saved += 1
 
     cap.release()
-    return saved, skipped_temporal, considered, saved_by_class
+    return saved, skipped_temporal, skipped_small, considered, saved_by_class
 
 
 def main() -> int:
@@ -314,7 +317,13 @@ def main() -> int:
     ap.add_argument("--frame-stride", type=int, default=15, help="Process every Nth frame (>=1).")
     ap.add_argument("--imgsz", type=int, default=640, help="Inference image size.")
     ap.add_argument("--device", default=None, help="Inference device, e.g. 'cpu', '0', '0,1'. Default: auto.")
-    ap.add_argument("--min-crop-px", type=int, default=8, help="Skip crops smaller than this (w or h).")
+    ap.add_argument(
+        "--min-crop-px",
+        type=int,
+        default=50,
+        help="Reject crops whose bbox width OR height is below this many pixels. "
+        "Tiny crops are unusable for review and retraining. Default: 50.",
+    )
     ap.add_argument(
         "--dedup-mode",
         choices=("standard", "aggressive"),
@@ -424,6 +433,7 @@ def main() -> int:
 
     total_saved = 0
     total_skipped = 0
+    total_skipped_small = 0
     total_considered = 0
     saved_by_class: Counter = Counter()
     with metadata_path.open("w", newline="", encoding="utf-8") as f:
@@ -431,7 +441,7 @@ def main() -> int:
         writer.writeheader()
         for vi, video_path in enumerate(videos, 1):
             print(f"[{vi}/{len(videos)}] {video_path.name}")
-            saved, skipped, considered, by_class = process_video(
+            saved, skipped, skipped_small, considered, by_class = process_video(
                 cv2=cv2,
                 imagehash=imagehash,
                 Image=Image,
@@ -455,11 +465,12 @@ def main() -> int:
             f.flush()
             total_saved += saved
             total_skipped += skipped
+            total_skipped_small += skipped_small
             total_considered += considered
             saved_by_class.update(by_class)
             print(
                 f"    detections: {considered} | saved: {saved} | "
-                f"skipped (temporal dedup): {skipped}"
+                f"skipped small: {skipped_small} | skipped (temporal dedup): {skipped}"
             )
 
     reduction = (total_skipped / total_considered * 100.0) if total_considered else 0.0
@@ -467,6 +478,7 @@ def main() -> int:
     print(f"  Mining mode:                {args.mode}")
     print(f"  Total detections:           {total_considered}")
     print(f"  Saved crops:                {total_saved}")
+    print(f"  Skipped (small <{args.min_crop_px}px):     {total_skipped_small}")
     print(f"  Skipped by temporal dedup:  {total_skipped}")
     print(f"  Reduction:                  {reduction:.1f}%")
     if saved_by_class:

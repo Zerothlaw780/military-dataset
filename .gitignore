@@ -7,6 +7,19 @@
 datasets/
 merged_dataset/
 runs/
+models/
+training/
+
+# --- Working artifacts (videos, mining batches, archives) ---
+videos/
+videos_batch*/
+batch_*/
+hardcase_*/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.zip
 
 # --- Model artifacts / exports ---
 *.pt
@@ -17,6 +30,11 @@ runs/
 *.jpg
 *.jpeg
 *.png
+
+# Track documentation/example figures (override the image ignore above)
+!docs/**
+!examples/**
+!reports/**
 
 # --- Python caches ---
 __pycache__/
